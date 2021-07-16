@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 
 import './App.css'
+import SeasonDisplay from './SeasonDisplay'
 
 // default state value to null for as yet undetermined number
+// state getting passed down as a props into SeasonDisplay
 class App extends Component {
   state = {
     lat: null,
@@ -10,33 +12,30 @@ class App extends Component {
   }
   // requires 2 fn callbacks
   // will be called frequently so don't want it in render method
-  position = window.navigator.geolocation.getCurrentPosition(
-    (position) => {
-      this.setState({
-        lat: position.coords.latitude
-      })
-    },
-    (err) => {
-      this.setState({ errorMessage: err.message })
-    }
-  )
+  // componentDidMount() place to do data loading
   componentDidMount() {
-    console.log('my component rendered to the screen, mounted')
-  }
-  componentDidUpdate() {
-    console.log('my component was just updated - it rerendered!')
+    window.navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          lat: position.coords.latitude
+        })
+      },
+      (err) => {
+        this.setState({ errorMessage: err.message })
+      }
+    )
   }
 
   render() {
-    if (this.state.errrorMessage && !this.state.lat) {
-      return <h2>Error: {this.state.errorMessage}</h2>
+    if (this.state.errorMessage && !this.state.lat) {
+      return <div>Error: {this.state.errorMessage}</div>
     }
 
-    if (this.state.lat && !this.state.errorMessage) {
-      return <h2> Latitude: {this.state.lat} </h2>
+    if (!this.state.errorMessage && this.state.lat) {
+      return <SeasonDisplay lat={this.state.lat} />
     }
 
-    return <h2>Loading...</h2>
+    return <div>Loading!</div>
   }
 }
 
@@ -52,5 +51,16 @@ lattitude will tell you which hemisphere
 
 component needs to rerender itself with the new geolocation info, which we have had to wait for, so needs to be a class.
 
+componentDidMount() {
+    console.log('my component rendered to the screen, mounted')
+  }
+  componentDidUpdate() {
+    console.log('my component was just updated - it rerendered!')
+  }
+
+  NB:
+  we are taking a property from the state on the app component, and passing it as a prop down into the child, <SeasonDisplay/>
+
+  Every time we call setState not only do we rerender the compoent, BUT also rerender any children too.
 
 */
