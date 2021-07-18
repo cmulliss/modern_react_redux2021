@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import './App.css'
 import SeasonDisplay from './SeasonDisplay'
+import Spinner from './Spinner'
 
 // default state value to null for as yet undetermined number
 // state getting passed down as a props into SeasonDisplay
@@ -25,8 +26,7 @@ class App extends Component {
       }
     )
   }
-
-  render() {
+  renderContent() {
     if (this.state.errorMessage && !this.state.lat) {
       return <div>Error: {this.state.errorMessage}</div>
     }
@@ -34,8 +34,12 @@ class App extends Component {
     if (!this.state.errorMessage && this.state.lat) {
       return <SeasonDisplay lat={this.state.lat} />
     }
-
-    return <div>Loading!</div>
+    // prop of 'message'for the spinner
+    return <Spinner message='Please accept location request' />
+  }
+  // above helper method avoids conditionals in render method.
+  render() {
+    return <div className='border-red'>{this.renderContent()}</div>
   }
 }
 
@@ -62,5 +66,23 @@ componentDidMount() {
   we are taking a property from the state on the app component, and passing it as a prop down into the child, <SeasonDisplay/>
 
   Every time we call setState not only do we rerender the compoent, BUT also rerender any children too.
+
+  or could do this above:
+
+  render() {
+    return (
+      <div className="border red">
+          {this.state.errorMessage && !this.state.lat &&
+            <div>Error: {this.state.errorMessage}</div>
+          }
+          {!this.state.errorMessage && this.state.lat &&
+            <div><SeasonDisplay lat={this.state.lat} /></div>
+          }
+          {!this.state.errorMessage && !this.state.lat &&
+            <Spinner message="Please accept the location request." />
+          }
+      </div>
+    );
+  }
 
 */
