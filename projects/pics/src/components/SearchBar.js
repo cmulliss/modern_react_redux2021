@@ -5,14 +5,16 @@ class SearchBar extends Component {
     term: ''
   }
 
-//   onFormSubmit = (event) => {
-//     event.preventDefault()
-//   }
+  onFormSubmit = (event) => {
+    event.preventDefault()
+
+    console.log(this.state.term)
+  }
 
   render() {
     return (
       <div className='ui segment'>
-        <form onSubmit={(e) => e.preventDefault()} className='ui form'>
+        <form onSubmit={this.onFormSubmit} className='ui form'>
           <div className='field'>
             <label htmlFor='Image Search'>Image Search</label>
             <input type='text' value={this.state.term} onChange={(e) => this.setState({ term: e.target.value })} />
@@ -51,4 +53,8 @@ export default SearchBar
 Another advantage of controlled components:
 Can also force capitalisation etc
 this.setState({ term: e.target.value.toLocaleUpperCase() })}
+
+Preventing default
+<form onSubmit={(e) => e.preventDefault()} className='ui form'> or
+ <form onSubmit={(e) => this.onFormSubmit(e)}
 */
