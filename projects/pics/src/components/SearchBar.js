@@ -5,11 +5,13 @@ class SearchBar extends Component {
     term: ''
   }
 
+  // whenever the user submits the form, we are going to run onFormSubmit. We take the event, prevent the default behaviour, then look at our props object and we call the fn that was passed in as the onSubmit prop, and invoke that fn with this.state.term. In App, we passed in onSearchSubmit to the onSubmit prop.
   onFormSubmit = (event) => {
     event.preventDefault()
 
-    console.log(this.state.term)
+    this.props.onSubmit(this.state.term)
   }
+  // inside the SearchBar, to reference the prop, onSubmit in jsx, we say props.onSubmit, but because is a class based component, need 'this' too.
 
   render() {
     return (
