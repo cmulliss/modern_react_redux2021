@@ -1,0 +1,18 @@
+.image-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 0 10px;
+  /* how tall each row will be */
+  grid-auto-rows: 10px;
+}
+.image-list img {
+  width: 250px;
+  grid-row-end: span 2;
+}
+
+/* alternative, possibly better solution, but does crop images */
+/* .image-list img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+} */

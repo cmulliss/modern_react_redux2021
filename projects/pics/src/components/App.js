@@ -1,33 +1,30 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import unsplash from '../api/unsplash'
 
 import './App.css'
 import SearchBar from './SearchBar'
+import ImageList from './ImageList'
 class App extends Component {
   // expect to get images property in state, so default to []
   state = {
     images: []
   }
-
   onSearchSubmit = async (term) => {
-    const response = await axios.get('https://api.unsplash.com/search/photos', {
-      params: { query: term },
-      headers: {
-        Authorization: 'Client-ID 5n4sqSgKNCOPOE8-gfmI6zVIAyjHggzn9hfRHhPt0Cs'
-      }
+    const response = await unsplash.get('/search/photos', {
+      params: { query: term, per_page: 20 }
     })
-    console.log('this', this)
-    this.setState({ images: response.data.results })
 
+    this.setState({ images: response.data.results })
     // can see response.data.results contains the list of images
     // when we get the response we want to set it on our component state, which will casue our component to render and we can print out the number of images.
   }
-
   render() {
     return (
       <div className='ui container' style={{ marginTop: '10px' }}>
         <SearchBar onSubmit={this.onSearchSubmit} />
-        Found: {this.state.images.length} images
+        {/* Found: {this.state.images.length} images */}
+        {/* new prop 'images' from state, will show as props in ImageList */}
+        <ImageList images={this.state.images} />
       </div>
     )
   }
