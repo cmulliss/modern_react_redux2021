@@ -1,5 +1,4 @@
 import React from 'react'
-import ApprovalCard from './ApprovalCard'
 
 const CommentDetail = (props) => {
   console.log(props)

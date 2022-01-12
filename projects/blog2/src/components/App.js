@@ -13,9 +13,12 @@ const App = () => {
       <ApprovalCard>
         <CommentDetail author='Sam' comment='Hello' avatar={faker.image.image()} />
       </ApprovalCard>
-
-      <CommentDetail author='Susie' comment='More content' avatar={faker.image.image()} />
-      <CommentDetail author='Joe' comment='Nice weather' avatar={faker.image.image()} />
+      <ApprovalCard>
+        <CommentDetail author='Susie' comment='More content' avatar={faker.image.image()} />
+      </ApprovalCard>
+      <ApprovalCard>
+        <CommentDetail author='Joe' comment='Nice weather' avatar={faker.image.image()} />
+      </ApprovalCard>
     </div>
   )
 }
